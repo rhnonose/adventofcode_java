@@ -7,6 +7,15 @@ public class TurnOff extends MyCommand {
     }
 
     @Override public void executeCommand(Grid grid) {
+        int[][] gridBefore = grid.getGrid();
+        int[][] gridAfter = gridBefore.clone();
 
+        for(int firstX = getFirst().getX(); firstX <= getSecond().getX();firstX++){
+            for(int firstY = getFirst().getY(); firstY <= getSecond().getY();firstY++){
+                gridAfter[firstX][firstY] = 0;
+            }
+        }
+
+        grid.setGrid(gridAfter);
     }
 }

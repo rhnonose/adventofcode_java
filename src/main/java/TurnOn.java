@@ -8,16 +8,14 @@ public class TurnOn extends MyCommand {
 
     @Override
     public void executeCommand(Grid grid) {
-        int[][] gridBefore = grid.getGrid();
-        int[][] gridAfter = gridBefore.clone();
+        int[][] gridInt = grid.getGrid();
 
         for(int firstX = getFirst().getX(); firstX <= getSecond().getX();firstX++){
             for(int firstY = getFirst().getY(); firstY <= getSecond().getY();firstY++){
-                gridAfter[firstX][firstY] = 1;
+                gridInt[firstX][firstY] = 1;
             }
         }
-
-        grid.setGrid(gridAfter);
+        grid.setGrid(gridInt);
     }
 
 }

@@ -31,6 +31,7 @@ public class GridUtils {
         default:
             throw new InvalidCommandException("Command [" + command + "] is invalid.");
         }
+        myCommand.normalize();
         return myCommand;
     }
 

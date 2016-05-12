@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -92,6 +94,35 @@ public class FireHazardTest {
         MyCommand turnOn2 = GridUtils.parseCommand("turn on 3,3 through 4,4");
         turnOn2.executeCommand(grid);
         assertEquals("Number of lights on should be 13", 13, grid.countLights());
+    }
+
+    @Test
+    public void extractSquareTest(){
+        MyCommand command = new TurnOn(new Coordinate("0,2"), new Coordinate("2,0"));
+        command.normalize();
+        assertEquals("First coordinate should have smaller X and Y", new Coordinate("0,0"), command.getFirst());
+        assertEquals("Second coordinate should have bigger X and Y", new Coordinate("2,2"), command.getSecond());
+
+        MyCommand command2 = new TurnOn(new Coordinate("1,4"), new Coordinate("5,1"));
+        command2.normalize();
+        assertEquals("First coordinate should have smaller X and Y", new Coordinate("1,1"), command2.getFirst());
+        assertEquals("Second coordinate should have bigger X and Y", new Coordinate("5,4"), command2.getSecond());
+
+        MyCommand command3 = new TurnOn(new Coordinate("7,3"), new Coordinate("1,5"));
+        command3.normalize();
+        assertEquals("First coordinate should have smaller X and Y", new Coordinate("1,3"), command3.getFirst());
+        assertEquals("Second coordinate should have bigger X and Y", new Coordinate("7,5"), command3.getSecond());
+    }
+
+    @Test
+    public void thoroughTest() throws InvalidCommandException {
+        Grid grid = new Grid(10, 10);
+        GridUtils.parseCommand("turn on 0,0 through 3,3").executeCommand(grid);
+        GridUtils.parseCommand("turn on 7,1 through 6,4").executeCommand(grid);
+        GridUtils.parseCommand("turn off 2,3 through 1,0").executeCommand(grid);
+        GridUtils.parseCommand("toggle 1,8 through 8,7").executeCommand(grid);
+        GridUtils.parseCommand("toggle 7,3 through 5,8").executeCommand(grid);
+        assertEquals("Number of lights on should be 30", 30, grid.countLights());
     }
 
 }
