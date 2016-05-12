@@ -12,11 +12,7 @@ public class ToggleLights extends MyCommand {
 
         for(int firstX = getFirst().getX(); firstX <= getSecond().getX();firstX++){
             for(int firstY = getFirst().getY(); firstY <= getSecond().getY();firstY++){
-                if(gridAfter[firstX][firstY] == 1){
-                    gridAfter[firstX][firstY] = 0;
-                } else {
-                    gridAfter[firstX][firstY] = 1;
-                }
+                gridAfter[firstX][firstY] += 2;
             }
         }
 

@@ -12,7 +12,9 @@ public class TurnOff extends MyCommand {
 
         for(int firstX = getFirst().getX(); firstX <= getSecond().getX();firstX++){
             for(int firstY = getFirst().getY(); firstY <= getSecond().getY();firstY++){
-                gridAfter[firstX][firstY] = 0;
+                if(gridAfter[firstX][firstY] > 0) {
+                    gridAfter[firstX][firstY] -= 1;
+                }
             }
         }
 

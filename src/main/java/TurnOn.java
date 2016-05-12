@@ -12,7 +12,7 @@ public class TurnOn extends MyCommand {
 
         for(int firstX = getFirst().getX(); firstX <= getSecond().getX();firstX++){
             for(int firstY = getFirst().getY(); firstY <= getSecond().getY();firstY++){
-                gridInt[firstX][firstY] = 1;
+                gridInt[firstX][firstY] += 1;
             }
         }
         grid.setGrid(gridInt);

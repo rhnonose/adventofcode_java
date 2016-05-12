@@ -126,7 +126,7 @@ public class FireHazardTest {
         GridUtils.parseCommand("turn off 2,3 through 1,0").executeCommand(grid);
         GridUtils.parseCommand("toggle 1,8 through 8,7").executeCommand(grid);
         GridUtils.parseCommand("toggle 7,3 through 5,8").executeCommand(grid);
-        assertEquals("Number of lights on should be 30", 30, grid.countLights());
+        assertEquals("Total brightness should be 84", 84, grid.countLights());
     }
 
     @Test
@@ -143,6 +143,6 @@ public class FireHazardTest {
                 e.printStackTrace();
             }
         }
-        assertEquals("Total light count should be 56999", 569999, grid.countLights());
+        assertEquals("Total brightness should be 17836115", 17836115, grid.countLights());
     }
 }
