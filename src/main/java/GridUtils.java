@@ -17,22 +17,21 @@ public class GridUtils {
         String command = matcher.group(1);
         Coordinate c1 = new Coordinate(matcher.group(2));
         Coordinate c2 = new Coordinate(matcher.group(4));
-        MyCommand myCommand = null;
-        switch (command){
-        case "turn on":
-            myCommand = new TurnOn(c1, c2);
-            break;
-        case "turn off":
-            myCommand = new TurnOff(c1, c2);
-            break;
-        case "toggle":
-            myCommand = new ToggleLights(c1, c2);
-            break;
-        default:
-            throw new InvalidCommandException("Command [" + command + "] is invalid.");
-        }
+        MyCommand myCommand = getCommand(command, c1, c2);
         myCommand.normalize();
         return myCommand;
+    }
+
+    private static MyCommand getCommand(String command, Coordinate c1, Coordinate c2) throws InvalidCommandException {
+        switch (command){
+        case "turn on":
+            return new TurnOn(c1, c2);
+        case "turn off":
+            return new TurnOff(c1, c2);
+        case "toggle":
+            return new ToggleLights(c1, c2);
+        }
+        throw new InvalidCommandException("Command [" + command + "] is invalid.");
     }
 
     public static Pattern getCoordPattern() {

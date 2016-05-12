@@ -1,5 +1,9 @@
 import org.junit.Test;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -125,4 +129,20 @@ public class FireHazardTest {
         assertEquals("Number of lights on should be 30", 30, grid.countLights());
     }
 
+    @Test
+    public void fullExecutionTest() throws IOException {
+        FileInputStream stream = new FileInputStream("src/test/resources/input.txt");
+        InputStreamReader reader = new InputStreamReader(stream);
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        String line;
+        Grid grid = new Grid(1000,1000);
+        while((line = bufferedReader.readLine()) != null){
+            try {
+                GridUtils.parseCommand(line).executeCommand(grid);
+            } catch (InvalidCommandException e) {
+                e.printStackTrace();
+            }
+        }
+        assertEquals("Total light count should be 56999", 569999, grid.countLights());
+    }
 }
