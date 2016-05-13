@@ -1,13 +1,17 @@
+import command.*;
+import grid.Coordinate;
+import grid.Grid;
 import org.junit.Test;
+import parser.ParserUtils;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
 
@@ -16,9 +20,12 @@ import static org.junit.Assert.*;
  */
 public class FireHazardTest {
 
+    public static final int GRID_SIZE = 1000;
+    public static final int FINAL_ANSWER = 17836115;
+
     @Test
     public void testRegex(){
-        Pattern coordPattern = GridUtils.getCoordPattern();
+        Pattern coordPattern = ParserUtils.getCoordPattern();
         Matcher turnOnMatcher = coordPattern.matcher("turn on 1,1 through 5,2");
         assertTrue("Pattern should match", turnOnMatcher.matches());
         assertEquals("Should capture the command", "turn on", turnOnMatcher.group(1));
@@ -54,12 +61,12 @@ public class FireHazardTest {
     @Test
     public void testParseCommand() throws InvalidCommandException {
         Grid grid = new Grid(10, 10);
-        MyCommand turnOnCommand = GridUtils.parseCommand("turn on 1,1 through 2,2");
-        MyCommand turnOffCommand = GridUtils.parseCommand("turn off 3,3 through 4,4");
-        MyCommand toggleCommand = GridUtils.parseCommand("toggle 5,5 through 6,6");
-        assertEquals("Command should be of type TurnOn: ", TurnOn.class, turnOnCommand.getClass());
-        assertEquals("Command should be of type TurnOff: ", TurnOff.class, turnOffCommand.getClass());
-        assertEquals("Command should be of type ToggleLights: ", ToggleLights.class, toggleCommand.getClass());
+        MyCommand turnOnCommand = ParserUtils.parseCommand("turn on 1,1 through 2,2");
+        MyCommand turnOffCommand = ParserUtils.parseCommand("turn off 3,3 through 4,4");
+        MyCommand toggleCommand = ParserUtils.parseCommand("toggle 5,5 through 6,6");
+        assertEquals("Command should be of type command.TurnOn: ", TurnOn.class, turnOnCommand.getClass());
+        assertEquals("Command should be of type command.TurnOff: ", TurnOff.class, turnOffCommand.getClass());
+        assertEquals("Command should be of type command.ToggleLights: ", ToggleLights.class, toggleCommand.getClass());
         assertEquals("First coordinate should be", new Coordinate("1,1"), turnOnCommand.getFirst());
         assertEquals("Secnod coordinate should be", new Coordinate("2,2"), turnOnCommand.getSecond());
         assertEquals("First coordinate should be", new Coordinate("3,3"), turnOffCommand.getFirst());
@@ -71,14 +78,14 @@ public class FireHazardTest {
     @Test(expected = InvalidCommandException.class)
     public void invalidCommandTest() throws InvalidCommandException {
         Grid grid = new Grid(10, 10);
-        GridUtils.parseCommand("break 1,1 through 2,2");
+        ParserUtils.parseCommand("break 1,1 through 2,2");
     }
 
     @Test
     public void simpleTest() throws InvalidCommandException {
         Grid grid = new Grid(3, 3);
         assertEquals("Number of lights on should be 0", 0, grid.countLights());
-        MyCommand turnOn = GridUtils.parseCommand("turn on 0,0 through 2,2");
+        MyCommand turnOn = ParserUtils.parseCommand("turn on 0,0 through 2,2");
         turnOn.executeCommand(grid);
         int[][] resultGrid = grid.getGrid();
         for(int i = 0; i < 3; i++){
@@ -92,10 +99,10 @@ public class FireHazardTest {
     @Test
     public void anotherSimpleTest() throws InvalidCommandException{
         Grid grid = new Grid(5, 5);
-        MyCommand turnOn = GridUtils.parseCommand("turn on 0,0 through 2,2");
+        MyCommand turnOn = ParserUtils.parseCommand("turn on 0,0 through 2,2");
         turnOn.executeCommand(grid);
         assertEquals("Number of lights on should be 9", 9, grid.countLights());
-        MyCommand turnOn2 = GridUtils.parseCommand("turn on 3,3 through 4,4");
+        MyCommand turnOn2 = ParserUtils.parseCommand("turn on 3,3 through 4,4");
         turnOn2.executeCommand(grid);
         assertEquals("Number of lights on should be 13", 13, grid.countLights());
     }
@@ -121,11 +128,11 @@ public class FireHazardTest {
     @Test
     public void thoroughTest() throws InvalidCommandException {
         Grid grid = new Grid(10, 10);
-        GridUtils.parseCommand("turn on 0,0 through 3,3").executeCommand(grid);
-        GridUtils.parseCommand("turn on 7,1 through 6,4").executeCommand(grid);
-        GridUtils.parseCommand("turn off 2,3 through 1,0").executeCommand(grid);
-        GridUtils.parseCommand("toggle 1,8 through 8,7").executeCommand(grid);
-        GridUtils.parseCommand("toggle 7,3 through 5,8").executeCommand(grid);
+        ParserUtils.parseCommand("turn on 0,0 through 3,3").executeCommand(grid);
+        ParserUtils.parseCommand("turn on 7,1 through 6,4").executeCommand(grid);
+        ParserUtils.parseCommand("turn off 2,3 through 1,0").executeCommand(grid);
+        ParserUtils.parseCommand("toggle 1,8 through 8,7").executeCommand(grid);
+        ParserUtils.parseCommand("toggle 7,3 through 5,8").executeCommand(grid);
         assertEquals("Total brightness should be 84", 84, grid.countLights());
     }
 
@@ -135,14 +142,14 @@ public class FireHazardTest {
         InputStreamReader reader = new InputStreamReader(stream);
         BufferedReader bufferedReader = new BufferedReader(reader);
         String line;
-        Grid grid = new Grid(1000,1000);
+        Grid grid = new Grid(GRID_SIZE,GRID_SIZE);
         while((line = bufferedReader.readLine()) != null){
             try {
-                GridUtils.parseCommand(line).executeCommand(grid);
+                ParserUtils.parseCommand(line).executeCommand(grid);
             } catch (InvalidCommandException e) {
                 e.printStackTrace();
             }
         }
-        assertEquals("Total brightness should be 17836115", 17836115, grid.countLights());
+        assertEquals("Total brightness should be " + FINAL_ANSWER, FINAL_ANSWER, grid.countLights());
     }
 }

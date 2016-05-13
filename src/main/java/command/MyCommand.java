@@ -1,4 +1,7 @@
-import com.sun.org.apache.xerces.internal.dom.CoreDocumentImpl;
+package command;
+
+import grid.Coordinate;
+import grid.Grid;
 
 /**
  * Created by Rodrigo Nonose on 5/12/16.
@@ -30,23 +33,15 @@ public abstract class MyCommand {
                 first = second;
                 second = temp;
             } else {
-                int firstX = second.getX();
-                int firstY = first.getY();
-                Coordinate newFirst = new Coordinate(firstX, firstY);
-                int secondX = first.getX();
-                int secondY = second.getY();
-                Coordinate newSecond = new Coordinate(secondX, secondY);
+                Coordinate newFirst = new Coordinate(second.getX(), first.getY());
+                Coordinate newSecond = new Coordinate(first.getX(), second.getY());
                 first = newFirst;
                 second = newSecond;
             }
         } else {
             if(first.getY() > second.getY()){
-                int firstX = first.getX();
-                int firstY = second.getY();
-                Coordinate newFirst = new Coordinate(firstX, firstY);
-                int secondX = second.getX();
-                int secondY = first.getY();
-                Coordinate newSecond = new Coordinate(secondX, secondY);
+                Coordinate newFirst = new Coordinate(first.getX(), second.getY());
+                Coordinate newSecond = new Coordinate(second.getX(), first.getY());
                 first = newFirst;
                 second = newSecond;
             }

@@ -1,13 +1,17 @@
+package parser;
+
+import command.*;
+import grid.Coordinate;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by rhn on 5/12/16.
+ * Created by Rodrigo on 12/05/2016.
  */
-public class GridUtils {
+public class ParserUtils {
 
     private final static Pattern coordPattern = Pattern.compile("(turn on|turn off|toggle){1}\\s*(\\d+,\\d+){1}\\s*(through){1}\\s*(\\d+,\\d+){1}");
-
 
     public static MyCommand parseCommand(String raw) throws InvalidCommandException {
         Matcher matcher = getCoordPattern().matcher(raw);
@@ -24,12 +28,12 @@ public class GridUtils {
 
     private static MyCommand getCommand(String command, Coordinate c1, Coordinate c2) throws InvalidCommandException {
         switch (command){
-        case "turn on":
-            return new TurnOn(c1, c2);
-        case "turn off":
-            return new TurnOff(c1, c2);
-        case "toggle":
-            return new ToggleLights(c1, c2);
+            case "turn on":
+                return new TurnOn(c1, c2);
+            case "turn off":
+                return new TurnOff(c1, c2);
+            case "toggle":
+                return new ToggleLights(c1, c2);
         }
         throw new InvalidCommandException("Command [" + command + "] is invalid.");
     }
@@ -37,5 +41,4 @@ public class GridUtils {
     public static Pattern getCoordPattern() {
         return coordPattern;
     }
-
 }
