@@ -1,4 +1,4 @@
-package command;
+package day6.command;
 
 /**
  * Created by rhn on 5/12/16.

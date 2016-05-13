@@ -1,16 +1,16 @@
-package command;
+package day6.command;
 
-import grid.Coordinate;
-import grid.Grid;
+import day6.grid.Coordinate;
+import day6.grid.Grid;
 
 /**
  * Created by rhn on 5/12/16.
  */
-public class TurnOff extends MyCommand {
+public class ToggleLights extends MyCommand {
 
-    public static final int TURN_OFF_DECREASE = -1;
+    public static final int TOGGLE_INCREASE = 2;
 
-    public TurnOff(Coordinate c1, Coordinate c2) {
+    public ToggleLights(Coordinate c1, Coordinate c2) {
         super(c1,c2);
     }
 
@@ -19,12 +19,11 @@ public class TurnOff extends MyCommand {
 
         for(int firstX = getFirst().getX(); firstX <= getSecond().getX();firstX++){
             for(int firstY = getFirst().getY(); firstY <= getSecond().getY();firstY++){
-                if(gridInt[firstX][firstY] > 0) {
-                    gridInt[firstX][firstY] += TURN_OFF_DECREASE;
-                }
+                gridInt[firstX][firstY] += TOGGLE_INCREASE;
             }
         }
 
         grid.setGrid(gridInt);
     }
+
 }

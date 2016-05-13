@@ -1,7 +1,7 @@
-package parser;
+package day6.parser;
 
-import command.*;
-import grid.Coordinate;
+import day6.command.*;
+import day6.grid.Coordinate;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

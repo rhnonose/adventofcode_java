@@ -1,7 +1,7 @@
-package command;
+package day6.command;
 
-import grid.Coordinate;
-import grid.Grid;
+import day6.grid.Coordinate;
+import day6.grid.Grid;
 
 /**
  * Created by rhn on 5/12/16.

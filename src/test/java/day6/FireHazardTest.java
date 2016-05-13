@@ -1,17 +1,17 @@
-import command.*;
-import grid.Coordinate;
-import grid.Grid;
+package day6;
+
+import day6.command.*;
+import day6.grid.Coordinate;
+import day6.grid.Grid;
+import day6.parser.ParserUtils;
 import org.junit.Test;
-import parser.ParserUtils;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
 
@@ -138,7 +138,7 @@ public class FireHazardTest {
 
     @Test
     public void fullExecutionTest() throws IOException {
-        FileInputStream stream = new FileInputStream("src/test/resources/input.txt");
+        FileInputStream stream = new FileInputStream("src/test/resources/day6/input.txt");
         InputStreamReader reader = new InputStreamReader(stream);
         BufferedReader bufferedReader = new BufferedReader(reader);
         String line;

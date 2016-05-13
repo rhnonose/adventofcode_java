@@ -1,4 +1,4 @@
-package grid;
+package day6.grid;
 
 /**
  * Created by Rodrigo Nonose on 5/12/16.
